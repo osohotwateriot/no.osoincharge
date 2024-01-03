@@ -1,0 +1,48 @@
+{
+  "name": {
+    "en": "Water Heater",
+    "no": "Varmtvannsbereder"
+  },
+  "class": "other",
+  "capabilities": [
+    "measure_power",
+    "measure_temperature",
+    "water_heater_capacity_mixed_water",
+    "water_heater_connection_state",
+    "water_heater_current_set_point",
+    "water_heater_heating",
+    "water_heater_high_demand_mode",
+    "water_heater_mode",
+    "water_heater_optimization_mode",
+    "water_heater_sleep_mode",
+    "water_heater_v40min"
+  ],
+  "platforms": ["local"],
+  "connectivity": [],
+  "images": {
+    "small": "{{driverAssetsPath}}/images/small.png",
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
+  },
+  "pair": [
+    {
+      "id": "osoincharge_login_subscription_key"
+    },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "repair": [
+    {
+      "id": "osoincharge_login_subscription_key"
+    }
+  ]
+}

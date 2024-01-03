@@ -1,0 +1,14 @@
+{
+  "pair": {
+    "title": "Add OSO inCharge device",
+    "intro": "Enter the generated 'Subscription Key' for your account at 'https://portal.osoenergy.no/'",
+    "subscription_key": "Subscription Key",
+    "subscription_key_required": "The Subscription Key is required",
+    "connect": "Connect",
+    "next": "Next",
+    "invalid_subscription_key": "Provided subscription key is not valid"
+  },
+  "device": {
+    "device_connection_expired": "The subscription key for your device has expired. Go to your account at 'https://portal.osoenergy.no/' and extend it or renew it to repair the device."
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Minimum capacity of mixed water at 40°C",
+    "no": "Minimumskapasitet for blandet vann ved 40°C"
+  },
+  "getable": true,
+  "setable": false,
+  "units": {
+    "en": "L",
+    "no": "L"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/icons/water-heater-minimum-level-mixed-water.svg"
+}

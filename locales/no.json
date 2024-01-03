@@ -1,0 +1,14 @@
+{
+  "pair": {
+    "title": "Legg til OSO inCharge-enhet",
+    "intro": "Skriv inn den genererte 'Abonnementsnøkkelen' for kontoen din på 'https://portal.osoenergy.no/'",
+    "subscription_key": "Abonnementsnøkkel",
+    "subscription_key_required": "Abonnementsnøkkelen kreves",
+    "connect": "Koble",
+    "next": "Neste",
+    "invalid_subscription_key": "Den oppgitte abonnementsnøkkelen er ikke gyldig"
+  },
+  "device": {
+    "device_connection_expired": "Abonnementsnøkkelen for enheten din er utløpt. Gå til kontoen din på 'https://portal.osoenergy.no/' og forleng den eller forny den for å reparere enheten."
+  }
+}

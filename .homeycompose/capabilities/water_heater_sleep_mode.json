@@ -1,0 +1,10 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Sleep mode",
+    "no": "Sove modus"
+  },
+  "getable": true,
+  "setable": false,
+  "icon": "/assets/icons/water-heater-sleep-mode.svg"
+}

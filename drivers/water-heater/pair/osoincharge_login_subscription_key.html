@@ -1,0 +1,93 @@
+<script type="text/javascript">
+  Homey.setTitle(__("pair.title"));
+  $(".osoincharge-device-error").hide();
+
+  $("#connect").click(function () {
+    $(".osoincharge-device-error").hide();
+    let subscriptionKey = $("#subscriptionKey").val();
+
+    if (subscriptionKey != "") {
+      let account_data = {
+        subscription_key: subscriptionKey,
+      };
+
+      Homey.emit("test_subscription_key", { subscription_key: subscriptionKey })
+        .then((result) => {
+          $("#next").prop("disabled", false);
+        })
+        .catch((error) => {
+          $(".osoincharge-device-error").show();
+          $(".osoincharge-device-error-msg").html(
+            error.message || error.toString(),
+          );
+        });
+    } else {
+      $(".osoincharge-device-error").show();
+      $(".osoincharge-device-error-msg").html(
+        __("pair.subscription_key_required"),
+      );
+    }
+  });
+
+  $("#next").click(function () {
+    Homey.showView("list_devices");
+  });
+</script>
+
+<style type="text/css">
+  .form-group {
+    width: 100%;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .form-group label {
+    display: block;
+  }
+  .buttons,
+  .messages {
+    padding-top: 14px;
+  }
+  .button {
+    font-weight: 700;
+  }
+  .button:disabled {
+    color: #ccc;
+  }
+  .button:enabled {
+    color: #fff !important;
+  }
+  #connect:enabled {
+    background-color: #1875cf !important;
+  }
+  #next:enabled {
+    background-color: #00c139 !important;
+  }
+</style>
+
+<p data-i18n="pair.intro"></p>
+<div class="osoincharge-device-pairing">
+  <div class="form-group">
+    <label for="subscriptionKey" data-i18n="pair.subscription_key"
+      >Subscription Key</label
+    >
+    <input type="text" class="form-control" id="subscriptionKey" />
+  </div>
+
+  <div class="form-group buttons">
+    <button id="connect" class="button" data-i18n="pair.connect">
+      Connect
+    </button>
+    <button id="next" class="button" data-i18n="pair.next" disabled>
+      Next
+    </button>
+  </div>
+</div>
+
+<div class="messages">
+  <p
+    class="osoincharge-device-status osoincharge-device-error"
+    style="color: #ff6300"
+  >
+    <i class="fa fa-times"></i> <span class="osoincharge-device-error-msg"></span>
+  </p>
+</div>

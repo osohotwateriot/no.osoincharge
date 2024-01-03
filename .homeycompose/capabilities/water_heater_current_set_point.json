@@ -1,0 +1,15 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Target Temperature",
+    "no": "Måltemperatur"
+  },
+  "getable": true,
+  "setable": false,
+  "units": {
+    "en": "°C",
+    "no": "°C"
+  },
+  "insights": true,
+  "icon": "/assets/icons/water-heater-target-temperature.svg"
+}

@@ -1,0 +1,27 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Heating",
+    "no": "Oppvarming"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "values": [
+    {
+      "id": "on",
+      "title": {
+        "en": "On",
+        "no": "På"
+      }
+    },
+    {
+      "id": "off",
+      "title": {
+        "en": "Off",
+        "no": "Av"
+      }
+    }
+  ],
+  "icon": "/assets/icons/water-heater-heating.svg"
+}

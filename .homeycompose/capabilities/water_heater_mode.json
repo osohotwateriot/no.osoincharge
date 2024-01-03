@@ -1,0 +1,69 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Mode",
+    "no": "Modus"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "values": [
+    {
+      "id": "auto",
+      "title": {
+        "en": "Auto",
+        "no": "Auto"
+      }
+    },
+    {
+      "id": "manual",
+      "title": {
+        "en": "Manual",
+        "no": "Håndbok"
+      }
+    },
+    {
+      "id": "off",
+      "title": {
+        "en": "Off",
+        "no": "Av"
+      }
+    },
+    {
+      "id": "Legionella",
+      "title": {
+        "en": "Legionella",
+        "no": "Legionella"
+      }
+    },
+    {
+      "id": "PowerSave",
+      "title": {
+        "en": "Forced Off",
+        "no": "Tvunget av"
+      }
+    },
+    {
+      "id": "ExtraEnergy",
+      "title": {
+        "en": "Forced On",
+        "no": "Tvunget på"
+      }
+    },
+    {
+      "id": "Voltage",
+      "title": {
+        "en": "Voltage",
+        "no": "Spenning"
+      }
+    },
+    {
+      "id": "FFR",
+      "title": {
+        "en": "Off",
+        "no": "Av"
+      }
+    }
+  ],
+  "icon": "/assets/icons/water-heater-mode.svg"
+}

@@ -1,0 +1,452 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "no.osoincharge",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "OSO inCharge",
+    "no": "OSO inCharge"
+  },
+  "description": {
+    "en": "Control your smart water heaters",
+    "no": "Styr dine smarte varmtvannsberedere"
+  },
+  "category": [
+    "appliances"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Marian Graurov",
+    "email": "osowh.iot@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/osohotwateriot/no.osoincharge/issues"
+  },
+  "source": "https://github.com/osohotwateriot/no.osoincharge",
+  "support": "https://github.com/osohotwateriot/no.osoincharge/issues",
+  "brandColor": "#006a74",
+  "tags": {
+    "en": [
+      "water heater",
+      "water",
+      "bathroom",
+      "oso",
+      "oso incharge"
+    ],
+    "no": [
+      "varmtvannsbereder",
+      "vann",
+      "baderom",
+      "oso",
+      "oso incharge"
+    ]
+  },
+  "flow": {
+    "actions": [
+      {
+        "id": "force-on",
+        "title": {
+          "en": "Force on",
+          "no": "Tving på"
+        },
+        "titleFormatted": {
+          "en": "Force on [[type]]",
+          "no": "Tving på [[type]]"
+        },
+        "hint": {
+          "en": "Force the water heater to heat the water if possible",
+          "no": "Tving varmtvannsberederen til å varme opp vannet hvis mulig"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=water-heater"
+          },
+          {
+            "type": "dropdown",
+            "name": "type",
+            "values": [
+              {
+                "id": "until-maximum-temperature",
+                "label": {
+                  "en": "until maximum temperature",
+                  "no": "til maksimal temperatur"
+                }
+              },
+              {
+                "id": "for-one-hour",
+                "label": {
+                  "en": "for one hour",
+                  "no": "i en time"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "force-off",
+        "title": {
+          "en": "Force off",
+          "no": "Tving av"
+        },
+        "titleFormatted": {
+          "en": "Force off [[type]]",
+          "no": "Tving av [[type]]"
+        },
+        "hint": {
+          "en": "Prevent the water heater from heating the water if possible",
+          "no": "Unngå at varmtvannsberederen varmer opp vannet hvis mulig"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=water-heater"
+          },
+          {
+            "type": "dropdown",
+            "name": "type",
+            "values": [
+              {
+                "id": "until-minimum-temperature",
+                "label": {
+                  "en": "until minimum temperature",
+                  "no": "til minimumstemperatur"
+                }
+              },
+              {
+                "id": "for-one-hour",
+                "label": {
+                  "en": "for one hour",
+                  "no": "i en time"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "name": {
+        "en": "Water Heater",
+        "no": "Varmtvannsbereder"
+      },
+      "class": "other",
+      "capabilities": [
+        "measure_power",
+        "measure_temperature",
+        "water_heater_capacity_mixed_water",
+        "water_heater_connection_state",
+        "water_heater_current_set_point",
+        "water_heater_heating",
+        "water_heater_high_demand_mode",
+        "water_heater_mode",
+        "water_heater_optimization_mode",
+        "water_heater_sleep_mode",
+        "water_heater_v40min"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [],
+      "images": {
+        "small": "/drivers/water-heater/assets/images/small.png",
+        "large": "/drivers/water-heater/assets/images/large.png",
+        "xlarge": "/drivers/water-heater/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "osoincharge_login_subscription_key"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "osoincharge_login_subscription_key"
+        }
+      ],
+      "id": "water-heater",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device settings",
+            "no": "Enhetsinnstillinger"
+          },
+          "children": [
+            {
+              "id": "subscription_key",
+              "type": "text",
+              "label": {
+                "en": "Subscription Key",
+                "no": "Abonnementsnøkkel"
+              },
+              "value": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "capabilities": {
+    "water_heater_capacity_mixed_water": {
+      "type": "number",
+      "title": {
+        "en": "Current capacity mixed water at 40°C",
+        "no": "Nåværende kapasitet blandet vann ved 40°C"
+      },
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "L",
+        "no": "L"
+      },
+      "icon": "/assets/icons/water-heater-current-mix-water.svg"
+    },
+    "water_heater_connection_state": {
+      "type": "enum",
+      "title": {
+        "en": "Connection state",
+        "no": "Tilkoblingstilstand"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "values": [
+        {
+          "id": "Connected",
+          "title": {
+            "en": "Connected",
+            "no": "Tilkoblet"
+          }
+        },
+        {
+          "id": "Disconnected",
+          "title": {
+            "en": "Disconnected",
+            "no": "Koblet fra"
+          }
+        }
+      ],
+      "insights": true,
+      "icon": "/assets/icons/water-heater-connection-status.svg"
+    },
+    "water_heater_current_set_point": {
+      "type": "number",
+      "title": {
+        "en": "Target Temperature",
+        "no": "Måltemperatur"
+      },
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "°C",
+        "no": "°C"
+      },
+      "insights": true,
+      "icon": "/assets/icons/water-heater-target-temperature.svg"
+    },
+    "water_heater_heating": {
+      "type": "enum",
+      "title": {
+        "en": "Heating",
+        "no": "Oppvarming"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "values": [
+        {
+          "id": "on",
+          "title": {
+            "en": "On",
+            "no": "På"
+          }
+        },
+        {
+          "id": "off",
+          "title": {
+            "en": "Off",
+            "no": "Av"
+          }
+        }
+      ],
+      "icon": "/assets/icons/water-heater-heating.svg"
+    },
+    "water_heater_high_demand_mode": {
+      "type": "boolean",
+      "title": {
+        "en": "High demand",
+        "no": "Høy etterspørsel"
+      },
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icons/water-heater-high-demand.svg"
+    },
+    "water_heater_mode": {
+      "type": "enum",
+      "title": {
+        "en": "Mode",
+        "no": "Modus"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "values": [
+        {
+          "id": "auto",
+          "title": {
+            "en": "Auto",
+            "no": "Auto"
+          }
+        },
+        {
+          "id": "manual",
+          "title": {
+            "en": "Manual",
+            "no": "Håndbok"
+          }
+        },
+        {
+          "id": "off",
+          "title": {
+            "en": "Off",
+            "no": "Av"
+          }
+        },
+        {
+          "id": "Legionella",
+          "title": {
+            "en": "Legionella",
+            "no": "Legionella"
+          }
+        },
+        {
+          "id": "PowerSave",
+          "title": {
+            "en": "Forced Off",
+            "no": "Tvunget av"
+          }
+        },
+        {
+          "id": "ExtraEnergy",
+          "title": {
+            "en": "Forced On",
+            "no": "Tvunget på"
+          }
+        },
+        {
+          "id": "Voltage",
+          "title": {
+            "en": "Voltage",
+            "no": "Spenning"
+          }
+        },
+        {
+          "id": "FFR",
+          "title": {
+            "en": "Off",
+            "no": "Av"
+          }
+        }
+      ],
+      "icon": "/assets/icons/water-heater-mode.svg"
+    },
+    "water_heater_optimization_mode": {
+      "type": "enum",
+      "title": {
+        "en": "Optimization Mode",
+        "no": "Optimaliseringsmodus"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "values": [
+        {
+          "id": "Off",
+          "title": {
+            "en": "Off",
+            "no": "Av"
+          }
+        },
+        {
+          "id": "OSO",
+          "title": {
+            "en": "OSO",
+            "no": "OSO"
+          }
+        },
+        {
+          "id": "GridCompany",
+          "title": {
+            "en": "Grid Company",
+            "no": "Nettselskap"
+          }
+        },
+        {
+          "id": "SmartCompany",
+          "title": {
+            "en": "Smart Company",
+            "no": "Smart selskap"
+          }
+        },
+        {
+          "id": "Advanced",
+          "title": {
+            "en": "Advanced",
+            "no": "Avansert"
+          }
+        }
+      ],
+      "icon": "/assets/icons/water-heater-optimization-mode.svg"
+    },
+    "water_heater_sleep_mode": {
+      "type": "boolean",
+      "title": {
+        "en": "Sleep mode",
+        "no": "Sove modus"
+      },
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icons/water-heater-sleep-mode.svg"
+    },
+    "water_heater_v40min": {
+      "type": "number",
+      "title": {
+        "en": "Minimum capacity of mixed water at 40°C",
+        "no": "Minimumskapasitet for blandet vann ved 40°C"
+      },
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "L",
+        "no": "L"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/icons/water-heater-minimum-level-mixed-water.svg"
+    }
+  }
+}

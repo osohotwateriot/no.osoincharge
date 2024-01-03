@@ -1,0 +1,14 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Current capacity mixed water at 40°C",
+    "no": "Nåværende kapasitet blandet vann ved 40°C"
+  },
+  "getable": true,
+  "setable": false,
+  "units": {
+    "en": "L",
+    "no": "L"
+  },
+  "icon": "/assets/icons/water-heater-current-mix-water.svg"
+}

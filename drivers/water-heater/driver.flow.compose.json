@@ -1,0 +1,78 @@
+{
+  "actions": [
+    {
+      "id": "force-on",
+      "title": {
+        "en": "Force on",
+        "no": "Tving på"
+      },
+      "titleFormatted": {
+        "en": "Force on [[type]]",
+        "no": "Tving på [[type]]"
+      },
+      "hint": {
+        "en": "Force the water heater to heat the water if possible",
+        "no": "Tving varmtvannsberederen til å varme opp vannet hvis mulig"
+      },
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "type",
+          "values": [
+            {
+              "id": "until-maximum-temperature",
+              "label": {
+                "en": "until maximum temperature",
+                "no": "til maksimal temperatur"
+              }
+            },
+            {
+              "id": "for-one-hour",
+              "label": {
+                "en": "for one hour",
+                "no": "i en time"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "force-off",
+      "title": {
+        "en": "Force off",
+        "no": "Tving av"
+      },
+      "titleFormatted": {
+        "en": "Force off [[type]]",
+        "no": "Tving av [[type]]"
+      },
+      "hint": {
+        "en": "Prevent the water heater from heating the water if possible",
+        "no": "Unngå at varmtvannsberederen varmer opp vannet hvis mulig"
+      },
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "type",
+          "values": [
+            {
+              "id": "until-minimum-temperature",
+              "label": {
+                "en": "until minimum temperature",
+                "no": "til minimumstemperatur"
+              }
+            },
+            {
+              "id": "for-one-hour",
+              "label": {
+                "en": "for one hour",
+                "no": "i en time"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

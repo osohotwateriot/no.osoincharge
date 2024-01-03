@@ -1,0 +1,48 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Optimization Mode",
+    "no": "Optimaliseringsmodus"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "values": [
+    {
+      "id": "Off",
+      "title": {
+        "en": "Off",
+        "no": "Av"
+      }
+    },
+    {
+      "id": "OSO",
+      "title": {
+        "en": "OSO",
+        "no": "OSO"
+      }
+    },
+    {
+      "id": "GridCompany",
+      "title": {
+        "en": "Grid Company",
+        "no": "Nettselskap"
+      }
+    },
+    {
+      "id": "SmartCompany",
+      "title": {
+        "en": "Smart Company",
+        "no": "Smart selskap"
+      }
+    },
+    {
+      "id": "Advanced",
+      "title": {
+        "en": "Advanced",
+        "no": "Avansert"
+      }
+    }
+  ],
+  "icon": "/assets/icons/water-heater-optimization-mode.svg"
+}

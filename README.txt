@@ -1,0 +1,1 @@
+This app integrates OSO inCharge water heater devices into Homey to control.

@@ -1,0 +1,20 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "Device settings",
+      "no": "Enhetsinnstillinger"
+    },
+    "children": [
+      {
+        "id": "subscription_key",
+        "type": "text",
+        "label": {
+          "en": "Subscription Key",
+          "no": "Abonnementsnøkkel"
+        },
+        "value": ""
+      }
+    ]
+  }
+]
