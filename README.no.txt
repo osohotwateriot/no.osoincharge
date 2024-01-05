@@ -1,1 +1,1 @@
-Denne appen integrerer OSO inCharge-vannvarmerenheter i Homey for å kontrollere.
+Denne appen lar deg kontrollere OSO smartberedere koblet til inCharge-appen ved bruk av Homey.
