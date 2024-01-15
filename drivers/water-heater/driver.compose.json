@@ -15,7 +15,11 @@
     "water_heater_mode",
     "water_heater_optimization_mode",
     "water_heater_sleep_mode",
-    "water_heater_v40min"
+    "water_heater_v40min",
+    "water_heater_temperature_one",
+    "water_heater_temperature_low",
+    "water_heater_temperature_mid",
+    "water_heater_temperature_top"
   ],
   "platforms": ["local"],
   "connectivity": [],

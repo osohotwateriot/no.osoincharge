@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "no.osoincharge",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "platforms": [
@@ -156,7 +156,11 @@
         "water_heater_mode",
         "water_heater_optimization_mode",
         "water_heater_sleep_mode",
-        "water_heater_v40min"
+        "water_heater_v40min",
+        "water_heater_temperature_one",
+        "water_heater_temperature_low",
+        "water_heater_temperature_mid",
+        "water_heater_temperature_top"
       ],
       "platforms": [
         "local"
@@ -432,6 +436,66 @@
       "getable": true,
       "setable": false,
       "icon": "/assets/icons/water-heater-sleep-mode.svg"
+    },
+    "water_heater_temperature_low": {
+      "type": "number",
+      "title": {
+        "en": "Temperature Low",
+        "no": "Temperatur lav"
+      },
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "°C",
+        "no": "°C"
+      },
+      "insights": true,
+      "icon": "/assets/icons/water-heater-target-temperature.svg"
+    },
+    "water_heater_temperature_mid": {
+      "type": "number",
+      "title": {
+        "en": "Temperature Mid",
+        "no": "Temperatur Midt"
+      },
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "°C",
+        "no": "°C"
+      },
+      "insights": true,
+      "icon": "/assets/icons/water-heater-target-temperature.svg"
+    },
+    "water_heater_temperature_one": {
+      "type": "number",
+      "title": {
+        "en": "Temperature One",
+        "no": "Temperatur en"
+      },
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "°C",
+        "no": "°C"
+      },
+      "insights": true,
+      "icon": "/assets/icons/water-heater-target-temperature.svg"
+    },
+    "water_heater_temperature_top": {
+      "type": "number",
+      "title": {
+        "en": "Temperature Top",
+        "no": "Temperatur Topp"
+      },
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "°C",
+        "no": "°C"
+      },
+      "insights": true,
+      "icon": "/assets/icons/water-heater-target-temperature.svg"
     },
     "water_heater_v40min": {
       "type": "number",

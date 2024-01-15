@@ -4,6 +4,8 @@ import {
   CapabilityValueGetMap,
   DeviceDetails,
   DeviceListResponse,
+  Store,
+  StoreValueGetMap,
 } from "../../types";
 import OSOInChargeWaterHeaterDriver from "./driver";
 
@@ -19,6 +21,17 @@ const capabilityValueGetMap: CapabilityValueGetMap = {
   water_heater_optimization_mode: (d) => d.optimizationOption,
   water_heater_sleep_mode: (d) => d.isInPowerSave,
   water_heater_v40min: (d) => d.v40Min,
+  water_heater_temperature_one: (d) => d.control?.currentTemperatureOne,
+  water_heater_temperature_low: (d) => d.control?.currentTemperatureLow,
+  water_heater_temperature_mid: (d) => d.control?.currentTemperatureMid,
+  water_heater_temperature_top: (d) => d.control?.currentTemperatureTop,
+};
+
+const dataToStoreMap: StoreValueGetMap = {
+  HasOneTemperature: (d) => !!d.control?.currentTemperatureOne,
+  HasLowTemperature: (d) => !!d.control?.currentTemperatureLow,
+  HasMidTemperature: (d) => !!d.control?.currentTemperatureMid,
+  HasTopTemperature: (d) => !!d.control?.currentTemperatureTop,
 };
 
 export default class OSOInChargeWaterHeaterDevice extends Homey.Device {
@@ -83,7 +96,9 @@ export default class OSOInChargeWaterHeaterDevice extends Homey.Device {
   }
 
   protected async handleCapabilities(): Promise<void> {
-    const requiredCapabilities = this.driver.getCapabilities();
+    const requiredCapabilities = this.driver.getCapabilities(
+      this.getStore() as Store,
+    );
 
     await this.getCapabilities()
       .filter(
@@ -106,15 +121,16 @@ export default class OSOInChargeWaterHeaterDevice extends Homey.Device {
   public async syncDeviceFromList(): Promise<void> {
     const data: DeviceListResponse | undefined = this.getDeviceFromList();
     if (data == undefined) {
-      this.setUnavailable(this.homey.__("device.device_connection_expired")).catch(
-        (error) => {
-          this.error(error);
-        },
-      );
+      this.setUnavailable(
+        this.homey.__("device.device_connection_expired"),
+      ).catch((error) => {
+        this.error(error);
+      });
       this.error("Device is unavailable", this.id);
     } else {
       this.setAvailable();
       await this.updateSettings(data);
+      await this.updateStore(data);
       await this.endSync(data);
     }
   }
@@ -128,6 +144,30 @@ export default class OSOInChargeWaterHeaterDevice extends Homey.Device {
     await this.setSettings({
       subscription_key: data.subscription_key,
     });
+  }
+
+  protected async updateStore(
+    data: DeviceListResponse | undefined,
+  ): Promise<void> {
+    if (!data || data === undefined) {
+      return;
+    }
+
+    let store = this.getStore() as Store;
+    const updates = await Promise.all(
+      Object.keys(dataToStoreMap)
+        .filter(
+          (key: string) =>
+            store[key as keyof Store] !== dataToStoreMap[key](data),
+        )
+        .map(async (key: string): Promise<boolean> => {
+          await this.setStoreValue(key, dataToStoreMap[key](data));
+          return true;
+        }),
+    );
+    if (updates.some(Boolean)) {
+      await this.handleCapabilities();
+    }
   }
 
   private async endSync(

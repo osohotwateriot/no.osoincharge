@@ -16,6 +16,10 @@ export type CapabilityValueGetMap = {
   ) => boolean | string | number | undefined;
 };
 
+export type StoreValueGetMap = {
+  [key: string]: (d: Partial<DeviceListResponse>) => boolean;
+};
+
 export interface LoginCredentials {
   subscription_key: string;
 }
@@ -38,6 +42,10 @@ export interface DeviceListControlResponse {
   minTemperature: number;
   maxTemperature: number;
   currentTemperature: number;
+  currentTemperatureOne: number | undefined;
+  currentTemperatureLow: number | undefined;
+  currentTemperatureMid: number | undefined;
+  currentTemperatureTop: number | undefined;
 }
 
 export interface DeviceListDataResponse {
@@ -68,7 +76,12 @@ export interface DeviceListResponse {
   isInExtraEnergy: boolean;
 }
 
-export interface Store {}
+export interface Store {
+  readonly HasOneTemperature: boolean;
+  readonly HasLowTemperature: boolean;
+  readonly HasMidTemperature: boolean;
+  readonly HasTopTemperature: boolean;
+}
 
 export interface Settings {
   subscription_key: string;

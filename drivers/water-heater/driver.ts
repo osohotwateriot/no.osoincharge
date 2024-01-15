@@ -6,6 +6,7 @@ import {
   DeviceListResponse,
   LoginCredentials,
   DeviceDetails,
+  Store,
 } from "../../types";
 import OSOInChargeWaterHeaterDevice from "./device";
 
@@ -54,17 +55,28 @@ export default class OSOInChargeWaterHeaterDriver extends Homey.Driver {
           currentSubscriptionKey,
         );
         return devices.map(
-          ({ deviceId, deviceName, subscription_key }): DeviceDetails => {
+          ({
+            deviceId,
+            deviceName,
+            subscription_key,
+            control,
+          }): DeviceDetails => {
+            const store: Store = {
+              HasOneTemperature: !!control.currentTemperatureOne,
+              HasLowTemperature: !!control.currentTemperatureLow,
+              HasMidTemperature: !!control.currentTemperatureMid,
+              HasTopTemperature: !!control.currentTemperatureTop,
+            };
             return {
               name: deviceName,
               data: {
                 id: deviceId,
               },
-              store: {},
+              store: store,
               settings: {
                 subscription_key: subscription_key,
               },
-              capabilities: this.getCapabilities(),
+              capabilities: this.getCapabilities(store),
             };
           },
         );
@@ -106,7 +118,12 @@ export default class OSOInChargeWaterHeaterDriver extends Homey.Driver {
     });
   }
 
-  public getCapabilities(): string[] {
+  public getCapabilities({
+    HasOneTemperature,
+    HasLowTemperature,
+    HasMidTemperature,
+    HasTopTemperature,
+  }: Store): string[] {
     return [
       "measure_power",
       "measure_temperature",
@@ -119,6 +136,10 @@ export default class OSOInChargeWaterHeaterDriver extends Homey.Driver {
       "water_heater_optimization_mode",
       "water_heater_sleep_mode",
       "water_heater_v40min",
+      ...(HasOneTemperature ? ["water_heater_temperature_one"] : []),
+      ...(HasLowTemperature ? ["water_heater_temperature_low"] : []),
+      ...(HasMidTemperature ? ["water_heater_temperature_mid"] : []),
+      ...(HasTopTemperature ? ["water_heater_temperature_top"] : []),
     ];
   }
 }
