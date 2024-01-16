@@ -10,6 +10,7 @@ import {
 import withTimers from "./lib/withTimers";
 import OSOInChargeWaterHeaterDevice from "./drivers/water-heater/device";
 import { Driver } from "homey/lib/Device";
+import { DateTime } from "luxon";
 
 axios.defaults.baseURL = "https://api.osoenergy.no/water-heater-api";
 
@@ -212,6 +213,81 @@ export default class OSOInChargeApp extends withApi(withTimers(App)) {
     });
   }
 
+  public async enableHighDemand(subscription_key: string, deviceId: string) {
+    await this.post(
+      `/1/Device/${deviceId}/HighDemand/`,
+      subscription_key,
+    ).catch((error: Error | AxiosError) => {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status == 403 || error.response?.status == 401)
+          throw new Error("Subscription key is not valid.");
+        else if (error.response?.status == 400)
+          throw new Error("Error. Could not turn on high demand.");
+        else throw new Error("Unknown error occured");
+      }
+    });
+  }
+
+  public async disableHighDemand(subscription_key: string, deviceId: string) {
+    await this.delete(
+      `/1/Device/${deviceId}/HighDemand/`,
+      subscription_key,
+    ).catch((error: Error | AxiosError) => {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status == 403 || error.response?.status == 401)
+          throw new Error("Subscription key is not valid.");
+        else if (error.response?.status == 400)
+          throw new Error("Error. Could not turn off high demand.");
+        else throw new Error("Unknown error occured");
+      }
+    });
+  }
+
+  public async turnOnSleepMode(
+    subscription_key: string,
+    deviceId: string,
+    from: string,
+    to: string,
+  ) {
+    var tz = this.homey.clock.getTimezone();
+    var fromDate = DateTime.fromFormat(from, "dd-MM-yyyy", {
+      zone: tz,
+    });
+    var toDate = DateTime.fromFormat(to, "dd-MM-yyyy", {
+      zone: tz,
+    });
+
+    var url = `/1/Device/${deviceId}/HolidayMode/${fromDate
+      .toUTC()
+      .toISO()}/${toDate.toUTC().toISO()}`;
+    await this.post(url, subscription_key).catch(
+      (error: Error | AxiosError) => {
+        if (axios.isAxiosError(error)) {
+          if (error.response?.status == 403 || error.response?.status == 401)
+            throw new Error("Subscription key is not valid.");
+          else if (error.response?.status == 400)
+            throw new Error("Error. Could not turn on sleep mode.");
+          else throw new Error("Unknown error occured");
+        }
+      },
+    );
+  }
+
+  public async turnOffSleepMode(subscription_key: string, deviceId: string) {
+    await this.delete(
+      `/1/Device/${deviceId}/HolidayMode/`,
+      subscription_key,
+    ).catch((error: Error | AxiosError) => {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status == 403 || error.response?.status == 401)
+          throw new Error("Subscription key is not valid.");
+        else if (error.response?.status == 400)
+          throw new Error("Error. Could not disable holiday mode.");
+        else throw new Error("Unknown error occured");
+      }
+    });
+  }
+
   public async get<T>(url: string, subscription_key: string) {
     return this.api.get<T>(url, {
       headers: {
@@ -230,6 +306,14 @@ export default class OSOInChargeApp extends withApi(withTimers(App)) {
         },
       },
     );
+  }
+
+  public async delete(url: string, subscription_key: string) {
+    return this.api.delete(url, {
+      headers: {
+        "Ocp-Apim-Subscription-Key": subscription_key,
+      },
+    });
   }
 }
 

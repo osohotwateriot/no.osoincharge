@@ -25,6 +25,32 @@ export default class OSOInChargeWaterHeaterDriver extends Homey.Driver {
     forceOffCard.registerRunListener(async (args) => {
       await args.device.forceOff(args.type);
     });
+
+    const turnOnHighDemand = this.homey.flow.getActionCard(
+      "turn-on-high-demand",
+    );
+    turnOnHighDemand.registerRunListener(async (args) => {
+      await args.device.enableHighDemand();
+    });
+
+    const turnOffHighDemand = this.homey.flow.getActionCard(
+      "turn-off-high-demand",
+    );
+    turnOffHighDemand.registerRunListener(async (args) => {
+      await args.device.disableHighDemand();
+    });
+
+    const turnOnSleepMode = this.homey.flow.getActionCard("turn-on-sleep-mode");
+    turnOnSleepMode.registerRunListener(async (args) => {
+      await args.device.turnOnSleepMode(args.from, args.to);
+    });
+
+    const turnOffSleepMode = this.homey.flow.getActionCard(
+      "turn-off-sleep-mode",
+    );
+    turnOffSleepMode.registerRunListener(async (args) => {
+      await args.device.turnOffSleepMode();
+    });
   }
 
   async onPair(session: PairSession): Promise<void> {

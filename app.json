@@ -135,6 +135,98 @@
             ]
           }
         ]
+      },
+      {
+        "id": "turn-on-high-demand",
+        "title": {
+          "en": "Turn on high demand",
+          "no": "Slå på høy etterspørsel"
+        },
+        "hint": {
+          "en": "You can use the high demand mode to heat your water heater for a short period.",
+          "no": "Du kan bruke høy etterspørsel-modus til å varme opp varmtvannsberederen i en kort periode."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=water-heater"
+          }
+        ]
+      },
+      {
+        "id": "turn-off-high-demand",
+        "title": {
+          "en": "Turn off high demand",
+          "no": "Slå av høy etterspørsel"
+        },
+        "hint": {
+          "en": "Disable the active high demand mode.",
+          "no": "Deaktiver den aktive høybehovsmodusen."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=water-heater"
+          }
+        ]
+      },
+      {
+        "id": "turn-on-sleep-mode",
+        "title": {
+          "en": "Turn on sleep mode",
+          "no": "Slå på hvilemodus"
+        },
+        "titleFormatted": {
+          "en": "Turn on sleep mode from [[from]] to [[to]]",
+          "no": "Slå på hvilemodus fra [[from]] til [[to]]"
+        },
+        "hint": {
+          "en": "Put water heater in sleep mode if you're going away for some days",
+          "no": "Sett varmtvannsberederen i hvilemodus hvis du skal bort i noen dager"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=water-heater"
+          },
+          {
+            "type": "date",
+            "name": "from",
+            "placeholder": {
+              "en": "from",
+              "no": "fra"
+            }
+          },
+          {
+            "type": "date",
+            "name": "to",
+            "placeholder": {
+              "en": "to",
+              "no": "til"
+            }
+          }
+        ]
+      },
+      {
+        "id": "turn-off-sleep-mode",
+        "title": {
+          "en": "Turn off sleep mode",
+          "no": "Slå av hvilemodus"
+        },
+        "hint": {
+          "en": "Turn off the water heater sleep mode.",
+          "no": "Slå av varmtvannsberederens hvilemodus."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=water-heater"
+          }
+        ]
       }
     ]
   },

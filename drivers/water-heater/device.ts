@@ -95,6 +95,22 @@ export default class OSOInChargeWaterHeaterDevice extends Homey.Device {
     );
   }
 
+  async enableHighDemand() {
+    await this.app.enableHighDemand(this.subscription_key, this.id);
+  }
+
+  async disableHighDemand() {
+    await this.app.disableHighDemand(this.subscription_key, this.id);
+  }
+
+  async turnOnSleepMode(from: string, to: string) {
+    await this.app.turnOnSleepMode(this.subscription_key, this.id, from, to);
+  }
+
+  async turnOffSleepMode() {
+    await this.app.turnOffSleepMode(this.subscription_key, this.id);
+  }
+
   protected async handleCapabilities(): Promise<void> {
     const requiredCapabilities = this.driver.getCapabilities(
       this.getStore() as Store,
