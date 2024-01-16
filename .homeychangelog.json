@@ -7,5 +7,8 @@
   },
   "1.0.2": {
     "en": "Added separate temperature sensors for the water heaters."
+  },
+  "1.0.3": {
+    "en": "Add flow to turn on/off sleep mode and high demand"
   }
 }

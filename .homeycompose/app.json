@@ -1,9 +1,11 @@
 {
   "id": "no.osoincharge",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "compatibility": ">=5.0.0",
   "sdk": 3,
-  "platforms": ["local"],
+  "platforms": [
+    "local"
+  ],
   "name": {
     "en": "OSO inCharge",
     "no": "OSO inCharge"
@@ -12,7 +14,9 @@
     "en": "Control your smart water heaters",
     "no": "Styr dine smarte varmtvannsberedere"
   },
-  "category": ["appliances"],
+  "category": [
+    "appliances"
+  ],
   "permissions": [],
   "images": {
     "small": "/assets/images/small.png",
@@ -30,7 +34,19 @@
   "support": "https://github.com/osohotwateriot/no.osoincharge/issues",
   "brandColor": "#006a74",
   "tags": {
-    "en": ["water heater", "water", "bathroom", "oso", "oso incharge"],
-    "no": ["varmtvannsbereder", "vann", "baderom", "oso", "oso incharge"]
+    "en": [
+      "water heater",
+      "water",
+      "bathroom",
+      "oso",
+      "oso incharge"
+    ],
+    "no": [
+      "varmtvannsbereder",
+      "vann",
+      "baderom",
+      "oso",
+      "oso incharge"
+    ]
   }
 }
