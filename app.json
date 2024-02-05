@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "no.osoincharge",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "platforms": [
@@ -51,6 +51,124 @@
     ]
   },
   "flow": {
+    "triggers": [
+      {
+        "id": "top-temperature-becomes-greater-than",
+        "title": {
+          "en": "Top temperature becomes greater than",
+          "no": "Topptemperaturen blir større enn"
+        },
+        "titleFormatted": {
+          "en": "Top temperature becomes greater than [[threshold]]°C",
+          "no": "Topptemperaturen blir større enn [[threshold]]°C"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=water-heater"
+          },
+          {
+            "type": "number",
+            "name": "threshold",
+            "placeholder": {
+              "en": "threshold",
+              "no": "terskel"
+            },
+            "min": 10,
+            "max": 80,
+            "step": 1
+          }
+        ]
+      },
+      {
+        "id": "top-temperature-becomes-less-than",
+        "title": {
+          "en": "Top temperature becomes less than",
+          "no": "Topptemperaturen blir mindre enn"
+        },
+        "titleFormatted": {
+          "en": "Top temperature becomes less than [[threshold]]°C",
+          "no": "Topptemperaturen blir mindre enn [[threshold]]°C"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=water-heater"
+          },
+          {
+            "type": "number",
+            "name": "threshold",
+            "placeholder": {
+              "en": "threshold",
+              "no": "terskel"
+            },
+            "min": 10,
+            "max": 80,
+            "step": 1
+          }
+        ]
+      },
+      {
+        "id": "low-temperature-becomes-greater-than",
+        "title": {
+          "en": "Low temperature becomes greater than",
+          "no": "Lav temperatur blir større enn"
+        },
+        "titleFormatted": {
+          "en": "Low temperature becomes greater than [[threshold]]°C",
+          "no": "Lav temperatur blir større enn [[threshold]]°C"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=water-heater"
+          },
+          {
+            "type": "number",
+            "name": "threshold",
+            "placeholder": {
+              "en": "threshold",
+              "no": "terskel"
+            },
+            "min": 10,
+            "max": 80,
+            "step": 1
+          }
+        ]
+      },
+      {
+        "id": "low-temperature-becomes-less-than",
+        "title": {
+          "en": "Low temperature becomes less than",
+          "no": "Lav temperatur blir mindre enn"
+        },
+        "titleFormatted": {
+          "en": "Low temperature becomes less than [[threshold]]°C",
+          "no": "Lav temperatur blir mindre enn [[threshold]]°C"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=water-heater"
+          },
+          {
+            "type": "number",
+            "name": "threshold",
+            "placeholder": {
+              "en": "threshold",
+              "no": "terskel"
+            },
+            "min": 10,
+            "max": 80,
+            "step": 1
+          }
+        ]
+      }
+    ],
     "actions": [
       {
         "id": "force-on",

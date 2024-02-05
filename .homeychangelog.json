@@ -10,5 +10,8 @@
   },
   "1.0.3": {
     "en": "Add flow to turn on/off sleep mode and high demand"
+  },
+  "1.0.4": {
+    "en": "Added triggers for low and top temperature changes."
   }
 }
