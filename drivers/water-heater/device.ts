@@ -145,9 +145,27 @@ export default class OSOInChargeWaterHeaterDevice extends Homey.Device {
       this.error("Device is unavailable", this.id);
     } else {
       this.setAvailable();
+
+      let previousTopTemperature = this.getCurrentTopTemperature(undefined);
+      let previousLowTemperature = this.getCurrentLowTemperature(undefined);
+
       await this.updateSettings(data);
       await this.updateStore(data);
       await this.endSync(data);
+
+      let currentTopTemperature = this.getCurrentTopTemperature(data);
+      let currentLowTemperature = this.getCurrentLowTemperature(data);
+      if (
+        currentTopTemperature != previousTopTemperature ||
+        currentLowTemperature != previousLowTemperature
+      ) {
+        await this.driver.triggerTemperatureFlows(this, {
+          currentLowTemp: currentLowTemperature,
+          currentTopTemp: currentTopTemperature,
+          previousLowTemp: previousLowTemperature,
+          previousTopTemp: previousTopTemperature,
+        });
+      }
     }
   }
 
@@ -205,6 +223,38 @@ export default class OSOInChargeWaterHeaterDevice extends Homey.Device {
           capabilityValueGetMap[capability](data),
         );
     });
+  }
+
+  private getCurrentTopTemperature(
+    data: DeviceListResponse | undefined,
+  ): number | undefined {
+    let store = this.getStore() as Store;
+    let key = "";
+    if (store.HasTopTemperature) key = "water_heater_temperature_top";
+    else if (store.HasMidTemperature) key = "water_heater_temperature_mid";
+    else if (store.HasLowTemperature) key = "water_heater_temperature_low";
+    else if (store.HasOneTemperature) key = "water_heater_temperature_one";
+
+    if (!key) return undefined;
+
+    if (data) return capabilityValueGetMap[key](data) as number;
+    else return this.getCapabilityValue(key);
+  }
+
+  private getCurrentLowTemperature(
+    data: DeviceListResponse | undefined,
+  ): number | undefined {
+    let store = this.getStore() as Store;
+    let key = "";
+    if (store.HasOneTemperature) key = "water_heater_temperature_one";
+    else if (store.HasLowTemperature) key = "water_heater_temperature_low";
+    else if (store.HasMidTemperature) key = "water_heater_temperature_mid";
+    else if (store.HasTopTemperature) key = "water_heater_temperature_top";
+
+    if (!key) return undefined;
+
+    if (data) return capabilityValueGetMap[key](data) as number;
+    else return this.getCapabilityValue(key);
   }
 
   private getDeviceFromList(): DeviceListResponse | undefined {

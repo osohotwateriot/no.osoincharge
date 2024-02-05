@@ -1,4 +1,4 @@
-import Homey from "homey";
+import Homey, { FlowCardTriggerDevice } from "homey";
 import PairSession from "homey/lib/PairSession";
 import OSOInChargeApp from "../../app";
 
@@ -12,9 +12,61 @@ import OSOInChargeWaterHeaterDevice from "./device";
 
 export default class OSOInChargeWaterHeaterDriver extends Homey.Driver {
   #app!: OSOInChargeApp;
+  #topTemperatureBecomesGreaterThan!: FlowCardTriggerDevice;
+  #topTemperatureBecomesLessThan!: FlowCardTriggerDevice;
+  #lowTemperatureBecomesGreaterThan!: FlowCardTriggerDevice;
+  #lowTemperatureBecomesLessThan!: FlowCardTriggerDevice;
 
   async onInit() {
     this.#app = this.homey.app as OSOInChargeApp;
+
+    this.#topTemperatureBecomesGreaterThan = this.homey.flow.getDeviceTriggerCard(
+      "top-temperature-becomes-greater-than",
+    );
+    this.#topTemperatureBecomesGreaterThan.registerRunListener(
+      async (args, state) => {
+        return (
+          args.threshold <= state.currentTopTemp &&
+          args.threshold > state.previousTopTemp
+        );
+      },
+    );
+
+    this.#topTemperatureBecomesLessThan = this.homey.flow.getDeviceTriggerCard(
+      "top-temperature-becomes-less-than",
+    );
+    this.#topTemperatureBecomesLessThan.registerRunListener(
+      async (args, state) => {
+        return (
+          args.threshold >= state.currentTopTemp &&
+          args.threshold < state.previousTopTemp
+        );
+      },
+    );
+
+    this.#lowTemperatureBecomesGreaterThan = this.homey.flow.getDeviceTriggerCard(
+      "low-temperature-becomes-greater-than",
+    );
+    this.#lowTemperatureBecomesGreaterThan.registerRunListener(
+      async (args, state) => {
+        return (
+          args.threshold <= state.currentLowTemp &&
+          args.threshold > state.previousLowTemp
+        );
+      },
+    );
+
+    this.#lowTemperatureBecomesLessThan = this.homey.flow.getDeviceTriggerCard(
+      "low-temperature-becomes-less-than",
+    );
+    this.#lowTemperatureBecomesLessThan.registerRunListener(
+      async (args, state) => {
+        return (
+          args.threshold >= state.currentLowTemp &&
+          args.threshold < state.previousLowTemp
+        );
+      },
+    );
 
     const forceOnCard = this.homey.flow.getActionCard("force-on");
     forceOnCard.registerRunListener(async (args) => {
@@ -167,6 +219,31 @@ export default class OSOInChargeWaterHeaterDriver extends Homey.Driver {
       ...(HasMidTemperature ? ["water_heater_temperature_mid"] : []),
       ...(HasTopTemperature ? ["water_heater_temperature_top"] : []),
     ];
+  }
+
+  async triggerTemperatureFlows(
+    device: Homey.Device,
+    state: object | undefined,
+  ) {
+    this.#topTemperatureBecomesGreaterThan
+      .trigger(device, {}, state)
+      .then(this.log)
+      .catch(this.error);
+
+    this.#topTemperatureBecomesLessThan
+      .trigger(device, {}, state)
+      .then(this.log)
+      .catch(this.error);
+
+    this.#lowTemperatureBecomesGreaterThan
+      .trigger(device, {}, state)
+      .then(this.log)
+      .catch(this.error);
+
+    this.#lowTemperatureBecomesLessThan
+      .trigger(device, {}, state)
+      .then(this.log)
+      .catch(this.error);
   }
 }
 
