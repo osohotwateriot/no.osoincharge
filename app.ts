@@ -20,7 +20,7 @@ export default class OSOInChargeApp extends withApi(withTimers(App)) {
   #syncInterval: NodeJS.Timeout | null = null;
 
   async onInit() {
-    await this.listDevices();
+    await this.listDevices(true);
   }
 
   public async login(loginCredentials: LoginCredentials): Promise<boolean> {
@@ -51,10 +51,11 @@ export default class OSOInChargeApp extends withApi(withTimers(App)) {
   }
 
   public async listDevices(
+    reset_interval: boolean,
     subscription_key?: string,
   ): Promise<DeviceListResponse[]> {
     await this.fillSubscriptionKeys(subscription_key);
-    this.planSyncFromDevices();
+    this.planSyncFromDevices(reset_interval);
 
     if (this.deviceList.length == 0) return [];
 
@@ -95,6 +96,15 @@ export default class OSOInChargeApp extends withApi(withTimers(App)) {
         .reduce((a, b) => {
           return a.concat(b);
         }, []);
+  }
+
+  async initSubscription(subscription_key: string) {
+    let existingData = this.deviceList.find(
+      (d) => d.subscription_key == subscription_key,
+    );
+    if (existingData) return;
+
+    await this.listDevices(true);
   }
 
   public getDevices({
@@ -148,15 +158,18 @@ export default class OSOInChargeApp extends withApi(withTimers(App)) {
       });
   }
 
-  private planSyncFromDevices(): void {
+  private planSyncFromDevices(reset_interval: boolean): void {
     if (this.#syncInterval) {
-      return;
+      if (!reset_interval) return;
+
+      this.homey.clearInterval(this.#syncInterval);
+      this.#syncInterval = null;
     }
     this.#syncInterval = this.setInterval(
       async (): Promise<void> => {
-        await this.listDevices();
+        await this.listDevices(false);
       },
-      { seconds: 15 },
+      { seconds: 30 },
       { actionType: "device list refresh", units: ["seconds"] },
     );
   }
@@ -179,17 +192,20 @@ export default class OSOInChargeApp extends withApi(withTimers(App)) {
       `/1/Device/${deviceId}/TurnOn?fullUtilizationParam=${fullUtilization}`,
       subscription_key,
     ).catch((error: Error | AxiosError) => {
-      this.log(error);
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status == 403 || error.response?.status == 401)
-          throw new Error("Subscription key is not valid.");
-        else if (error.response?.status == 400)
-          throw new Error(
-            "Rejected. Heater cannot be forced on at the moment.",
-          );
-        else throw new Error("Unknown error occured");
-      }
-    });
+        this.log(error);
+        if (axios.isAxiosError(error)) {
+          if (error.response?.status == 403 || error.response?.status == 401)
+            throw new Error("Subscription key is not valid.");
+          else if (error.response?.status == 400)
+            throw new Error(
+              "Rejected. Heater cannot be forced on at the moment.",
+            );
+          else throw new Error("Unknown error occured");
+        }
+      })
+      .then(async () => {
+        await this.listDevices(true);
+      });
   }
 
   public async forceWaterHeaterOff(
@@ -201,46 +217,55 @@ export default class OSOInChargeApp extends withApi(withTimers(App)) {
       `/1/Device/${deviceId}/TurnOff?fullUtilization=${fullUtilization}`,
       subscription_key,
     ).catch((error: Error | AxiosError) => {
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status == 403 || error.response?.status == 401)
-          throw new Error("Subscription key is not valid.");
-        else if (error.response?.status == 400)
-          throw new Error(
-            "Rejected. Heater cannot be forced off at the moment.",
-          );
-        else throw new Error("Unknown error occured");
-      }
-    });
+        if (axios.isAxiosError(error)) {
+          if (error.response?.status == 403 || error.response?.status == 401)
+            throw new Error("Subscription key is not valid.");
+          else if (error.response?.status == 400)
+            throw new Error(
+              "Rejected. Heater cannot be forced off at the moment.",
+            );
+          else throw new Error("Unknown error occured");
+        }
+      })
+      .then(async () => {
+        await this.listDevices(true);
+      });
   }
 
   public async enableHighDemand(subscription_key: string, deviceId: string) {
     await this.post(
-      `/1/Device/${deviceId}/HighDemand/`,
+      `/1/Device/${deviceId}/HighDemand/`, 
       subscription_key,
-    ).catch((error: Error | AxiosError) => {
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status == 403 || error.response?.status == 401)
-          throw new Error("Subscription key is not valid.");
-        else if (error.response?.status == 400)
-          throw new Error("Error. Could not turn on high demand.");
-        else throw new Error("Unknown error occured");
-      }
-    });
+      ).catch((error: Error | AxiosError) => {
+        if (axios.isAxiosError(error)) {
+          if (error.response?.status == 403 || error.response?.status == 401)
+            throw new Error("Subscription key is not valid.");
+          else if (error.response?.status == 400)
+            throw new Error("Error. Could not turn on high demand.");
+          else throw new Error("Unknown error occured");
+        }
+      })
+      .then(async () => {
+        await this.listDevices(true);
+      });
   }
 
   public async disableHighDemand(subscription_key: string, deviceId: string) {
     await this.delete(
       `/1/Device/${deviceId}/HighDemand/`,
       subscription_key,
-    ).catch((error: Error | AxiosError) => {
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status == 403 || error.response?.status == 401)
-          throw new Error("Subscription key is not valid.");
-        else if (error.response?.status == 400)
-          throw new Error("Error. Could not turn off high demand.");
-        else throw new Error("Unknown error occured");
-      }
-    });
+      ).catch((error: Error | AxiosError) => {
+        if (axios.isAxiosError(error)) {
+          if (error.response?.status == 403 || error.response?.status == 401)
+            throw new Error("Subscription key is not valid.");
+          else if (error.response?.status == 400)
+            throw new Error("Error. Could not turn off high demand.");
+          else throw new Error("Unknown error occured");
+        }
+      })
+      .then(async () => {
+        await this.listDevices(true);
+      });
   }
 
   public async turnOnSleepMode(
@@ -260,8 +285,8 @@ export default class OSOInChargeApp extends withApi(withTimers(App)) {
     var url = `/1/Device/${deviceId}/HolidayMode/${fromDate
       .toUTC()
       .toISO()}/${toDate.toUTC().toISO()}`;
-    await this.post(url, subscription_key).catch(
-      (error: Error | AxiosError) => {
+    await this.post(url, subscription_key)
+      .catch((error: Error | AxiosError) => {
         if (axios.isAxiosError(error)) {
           if (error.response?.status == 403 || error.response?.status == 401)
             throw new Error("Subscription key is not valid.");
@@ -269,23 +294,28 @@ export default class OSOInChargeApp extends withApi(withTimers(App)) {
             throw new Error("Error. Could not turn on sleep mode.");
           else throw new Error("Unknown error occured");
         }
-      },
-    );
+      })
+      .then(async () => {
+        await this.listDevices(true);
+      });
   }
 
   public async turnOffSleepMode(subscription_key: string, deviceId: string) {
     await this.delete(
       `/1/Device/${deviceId}/HolidayMode/`,
       subscription_key,
-    ).catch((error: Error | AxiosError) => {
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status == 403 || error.response?.status == 401)
-          throw new Error("Subscription key is not valid.");
-        else if (error.response?.status == 400)
-          throw new Error("Error. Could not disable holiday mode.");
-        else throw new Error("Unknown error occured");
-      }
-    });
+      ).catch((error: Error | AxiosError) => {
+        if (axios.isAxiosError(error)) {
+          if (error.response?.status == 403 || error.response?.status == 401)
+            throw new Error("Subscription key is not valid.");
+          else if (error.response?.status == 400)
+            throw new Error("Error. Could not disable holiday mode.");
+          else throw new Error("Unknown error occured");
+        }
+      })
+      .then(async () => {
+        await this.listDevices(true);
+      });
   }
 
   public async get<T>(url: string, subscription_key: string) {

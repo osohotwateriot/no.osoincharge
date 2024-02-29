@@ -148,7 +148,7 @@
         "en": "Top temperature becomes greater than",
         "no": "Topptemperaturen blir større enn"
       },
-      "titleFormatted":{
+      "titleFormatted": {
         "en": "Top temperature becomes greater than [[threshold]]°C",
         "no": "Topptemperaturen blir større enn [[threshold]]°C"
       },
@@ -172,7 +172,7 @@
         "en": "Top temperature becomes less than",
         "no": "Topptemperaturen blir mindre enn"
       },
-      "titleFormatted":{
+      "titleFormatted": {
         "en": "Top temperature becomes less than [[threshold]]°C",
         "no": "Topptemperaturen blir mindre enn [[threshold]]°C"
       },
@@ -196,7 +196,7 @@
         "en": "Low temperature becomes greater than",
         "no": "Lav temperatur blir større enn"
       },
-      "titleFormatted":{
+      "titleFormatted": {
         "en": "Low temperature becomes greater than [[threshold]]°C",
         "no": "Lav temperatur blir større enn [[threshold]]°C"
       },
@@ -220,7 +220,7 @@
         "en": "Low temperature becomes less than",
         "no": "Lav temperatur blir mindre enn"
       },
-      "titleFormatted":{
+      "titleFormatted": {
         "en": "Low temperature becomes less than [[threshold]]°C",
         "no": "Lav temperatur blir mindre enn [[threshold]]°C"
       },

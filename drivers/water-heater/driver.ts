@@ -20,9 +20,10 @@ export default class OSOInChargeWaterHeaterDriver extends Homey.Driver {
   async onInit() {
     this.#app = this.homey.app as OSOInChargeApp;
 
-    this.#topTemperatureBecomesGreaterThan = this.homey.flow.getDeviceTriggerCard(
-      "top-temperature-becomes-greater-than",
-    );
+    this.#topTemperatureBecomesGreaterThan =
+      this.homey.flow.getDeviceTriggerCard(
+        "top-temperature-becomes-greater-than",
+      );
     this.#topTemperatureBecomesGreaterThan.registerRunListener(
       async (args, state) => {
         return (
@@ -44,9 +45,10 @@ export default class OSOInChargeWaterHeaterDriver extends Homey.Driver {
       },
     );
 
-    this.#lowTemperatureBecomesGreaterThan = this.homey.flow.getDeviceTriggerCard(
-      "low-temperature-becomes-greater-than",
-    );
+    this.#lowTemperatureBecomesGreaterThan =
+      this.homey.flow.getDeviceTriggerCard(
+        "low-temperature-becomes-greater-than",
+      );
     this.#lowTemperatureBecomesGreaterThan.registerRunListener(
       async (args, state) => {
         return (
@@ -130,6 +132,7 @@ export default class OSOInChargeWaterHeaterDriver extends Homey.Driver {
       try {
         this.log("add_device");
         const devices: DeviceListResponse[] = await this.#app.listDevices(
+          true,
           currentSubscriptionKey,
         );
         return devices.map(
@@ -174,6 +177,7 @@ export default class OSOInChargeWaterHeaterDriver extends Homey.Driver {
           const result = await this.#app.login(data);
           if (result) {
             const deviceList = await this.#app.listDevices(
+              true,
               data.subscription_key,
             );
             var existing = deviceList.find((d) => d.deviceId == osoDevice.id);
@@ -203,6 +207,7 @@ export default class OSOInChargeWaterHeaterDriver extends Homey.Driver {
     HasTopTemperature,
   }: Store): string[] {
     return [
+      "onoff",
       "measure_power",
       "measure_temperature",
       "water_heater_capacity_mixed_water",

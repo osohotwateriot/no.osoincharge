@@ -10,6 +10,7 @@ import {
 import OSOInChargeWaterHeaterDriver from "./driver";
 
 const capabilityValueGetMap: CapabilityValueGetMap = {
+  onoff: (d) => d.control?.heater == "on",
   measure_power: (d) => (d.data?.actualLoadKwh ?? 0) * 1000,
   measure_temperature: (d) => d.control?.currentTemperature,
   water_heater_capacity_mixed_water: (d) => d.data?.capacityMixedWater40,
@@ -47,8 +48,25 @@ export default class OSOInChargeWaterHeaterDevice extends Homey.Device {
     this.id = id;
     this.subscription_key = this.getSetting("subscription_key");
 
+    await this.app.initSubscription(this.subscription_key);
     await this.handleCapabilities();
     await this.syncDeviceFromList();
+
+    this.registerCapabilityListener("onoff", async (value) => {
+      if (value) {
+        await this.app.forceWaterHeaterOn(
+          this.subscription_key,
+          this.id,
+          false,
+        );
+      } else {
+        await this.app.forceWaterHeaterOff(
+          this.subscription_key,
+          this.id,
+          false,
+        );
+      }
+    });
   }
 
   async onAdded() {
