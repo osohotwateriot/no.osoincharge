@@ -13,5 +13,8 @@
   },
   "1.0.4": {
     "en": "Added triggers for low and top temperature changes."
+  },
+  "1.0.5": {
+    "en": "Added onoff and target temperature capabilities"
   }
 }
