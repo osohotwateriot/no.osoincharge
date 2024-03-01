@@ -8,6 +8,10 @@ import type { HomeyClass } from "../types";
 
 type APIClass = new (...args: any[]) => {
   api: AxiosInstance;
+  get<T>(url: string, subscription_key: string) : Promise<axios.AxiosResponse<T, any>>;
+  put(url: string, subscription_key: string, data?: any) : Promise<axios.AxiosResponse<any, any>>
+  post(url: string, subscription_key: string) : Promise<axios.AxiosResponse<any, any>>
+  delete(url: string, subscription_key: string) : Promise<axios.AxiosResponse<any, any>>
 };
 
 export default function withAPI<T extends HomeyClass>(base: T): APIClass & T {
@@ -18,6 +22,46 @@ export default function withAPI<T extends HomeyClass>(base: T): APIClass & T {
       super(...args);
       this.api = axios.create();
       this.setupAxiosInterceptors();
+    }
+
+    public async get<T>(url: string, subscription_key: string) : Promise<axios.AxiosResponse<T, any>> {
+      return this.api.get<T>(url, {
+        headers: {
+          "Ocp-Apim-Subscription-Key": subscription_key,
+        },
+      });
+    }
+
+    public async put(url: string, subscription_key: string, data?: any) : Promise<axios.AxiosResponse<any, any>> {
+      return this.api.put(
+        url,
+        data,
+        {
+          headers: {
+            "Ocp-Apim-Subscription-Key": subscription_key,
+          },
+        },
+      );
+    }
+  
+    public async post(url: string, subscription_key: string) : Promise<axios.AxiosResponse<any, any>> {
+      return this.api.post(
+        url,
+        {},
+        {
+          headers: {
+            "Ocp-Apim-Subscription-Key": subscription_key,
+          },
+        },
+      );
+    }
+  
+    public async delete(url: string, subscription_key: string) : Promise<axios.AxiosResponse<any, any>> {
+      return this.api.delete(url, {
+        headers: {
+          "Ocp-Apim-Subscription-Key": subscription_key,
+        },
+      });
     }
 
     private setupAxiosInterceptors(): void {

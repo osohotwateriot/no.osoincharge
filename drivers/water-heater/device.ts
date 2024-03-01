@@ -13,9 +13,9 @@ const capabilityValueGetMap: CapabilityValueGetMap = {
   onoff: (d) => d.control?.heater == "on",
   measure_power: (d) => (d.data?.actualLoadKwh ?? 0) * 1000,
   measure_temperature: (d) => d.control?.currentTemperature,
+  target_temperature: (d) => d.control?.targetTemperature,
   water_heater_capacity_mixed_water: (d) => d.data?.capacityMixedWater40,
   water_heater_connection_state: (d) => d.connectionState?.connectionState,
-  water_heater_current_set_point: (d) => d.control?.targetTemperature,
   water_heater_heating: (d) => d.control?.heater,
   water_heater_high_demand_mode: (d) => d.isInExtraEnergy,
   water_heater_mode: (d) => d.control?.mode,
@@ -66,6 +66,14 @@ export default class OSOInChargeWaterHeaterDevice extends Homey.Device {
           false,
         );
       }
+    });
+
+    this.registerCapabilityListener("target_temperature", async (value) => {
+      await this.app.setTargetTemperature(
+        this.subscription_key,
+        this.id,
+        value,
+      );
     });
   }
 

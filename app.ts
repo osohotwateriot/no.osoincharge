@@ -318,31 +318,22 @@ export default class OSOInChargeApp extends withApi(withTimers(App)) {
       });
   }
 
-  public async get<T>(url: string, subscription_key: string) {
-    return this.api.get<T>(url, {
-      headers: {
-        "Ocp-Apim-Subscription-Key": subscription_key,
-      },
-    });
-  }
-
-  public async post(url: string, subscription_key: string) {
-    return this.api.post(
-      url,
-      {},
+  public async setTargetTemperature(subscription_key: string, deviceId: string, temperature: number) {
+    await this.put(
+      `/1/Device/${deviceId}/Profile`,
+      subscription_key,
       {
-        headers: {
-          "Ocp-Apim-Subscription-Key": subscription_key,
-        },
-      },
-    );
-  }
-
-  public async delete(url: string, subscription_key: string) {
-    return this.api.delete(url, {
-      headers: {
-        "Ocp-Apim-Subscription-Key": subscription_key,
-      },
+        hours: Array(24).fill(temperature)
+      }
+    ).catch((error: Error | AxiosError) => {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status == 403 || error.response?.status == 401)
+          throw new Error("Subscription key is not valid.");
+        else throw new Error("Unknown error occured");
+      }
+    })
+    .then(async () => {
+      await this.listDevices(true);
     });
   }
 }
