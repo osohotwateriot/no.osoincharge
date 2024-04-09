@@ -1,6 +1,6 @@
 {
   "id": "no.osoincharge",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "platforms": [
@@ -32,7 +32,7 @@
   },
   "source": "https://github.com/osohotwateriot/no.osoincharge",
   "support": "https://github.com/osohotwateriot/no.osoincharge/issues",
-  "brandColor": "#006a74",
+  "brandColor": "#0061A0",
   "tags": {
     "en": [
       "water heater",
