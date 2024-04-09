@@ -16,5 +16,8 @@
   },
   "1.0.5": {
     "en": "Added onoff and target temperature capabilities"
+  },
+  "1.0.6": {
+    "en": "Updated app logo."
   }
 }
