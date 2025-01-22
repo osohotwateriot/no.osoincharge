@@ -25,5 +25,8 @@
   },
   "1.0.8": {
     "en": "Update app logo and brand color"
+  },
+  "1.0.9": {
+    "en": "Add flow - action to turn on sleep mode from today for a defined number of days"
   }
 }
