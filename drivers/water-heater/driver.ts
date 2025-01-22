@@ -105,6 +105,11 @@ export default class OSOInChargeWaterHeaterDriver extends Homey.Driver {
     turnOffSleepMode.registerRunListener(async (args) => {
       await args.device.turnOffSleepMode();
     });
+
+    const turnOnSleepModeForXDays = this.homey.flow.getActionCard("turn-on-sleep-mode-for-x-days");
+    turnOnSleepModeForXDays.registerRunListener(async (args) => {
+      await args.device.turnOnSleepModeForXDays(args.days);
+    })
   }
 
   async onPair(session: PairSession): Promise<void> {

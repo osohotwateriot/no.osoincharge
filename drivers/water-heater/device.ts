@@ -8,6 +8,7 @@ import {
   StoreValueGetMap,
 } from "../../types";
 import OSOInChargeWaterHeaterDriver from "./driver";
+import { DateTime } from "luxon";
 
 const capabilityValueGetMap: CapabilityValueGetMap = {
   onoff: (d) => d.control?.heater == "on",
@@ -135,6 +136,12 @@ export default class OSOInChargeWaterHeaterDevice extends Homey.Device {
 
   async turnOffSleepMode() {
     await this.app.turnOffSleepMode(this.subscription_key, this.id);
+  }
+
+  async turnOnSleepModeForXDays(days: number) {
+    const from = DateTime.now().startOf('day');
+    const to = from.plus({days: days});
+    await this.app.turnOnSleepMode(this.subscription_key, this.id, from.toFormat('dd-MM-yyyy'), to.toFormat('dd-MM-yyyy'));
   }
 
   protected async handleCapabilities(): Promise<void> {

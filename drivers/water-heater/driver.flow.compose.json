@@ -139,6 +139,34 @@
         "en": "Turn off the water heater sleep mode.",
         "no": "Slå av varmtvannsberederens hvilemodus."
       }
+    },
+    {
+      "id": "turn-on-sleep-mode-for-x-days",
+      "title": {
+        "en": "Turn on sleep mode for X days",
+        "no": "Slå på hvilemodus i X dager"
+      },
+      "titleFormatted": {
+        "en": "Turn on sleep mode from today for [[days]] days",
+        "no": "Slå på hvilemodus fra i dag i [[days]] dager"
+      },
+      "hint": {
+        "en": "Put water heater in sleep mode for a selected amount of days if you're going away",
+        "no": "Sett varmtvannsberederen i hvilemodus for et valgt antall dager hvis du skal bort"
+      },
+      "args": [
+        {
+          "type": "number",
+          "name": "days",
+          "placeholder": {
+            "en": "days",
+            "no": "dager"
+          },
+          "min": 1,
+          "max": 730,
+          "step": 1
+        }
+      ]
     }
   ],
   "triggers": [
