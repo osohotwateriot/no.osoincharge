@@ -9,6 +9,7 @@
     "measure_power",
     "measure_temperature",
     "target_temperature",
+    "meter_power",
     "water_heater_capacity_mixed_water",
     "water_heater_connection_state",
     "water_heater_heating",

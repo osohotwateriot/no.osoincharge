@@ -52,6 +52,7 @@ export interface DeviceListDataResponse {
   actualLoadKwh: number;
   tappingCapacitykWh: number;
   capacityMixedWater40: number;
+  consumedPowerkWh: number;
 }
 
 export interface DeviceListConnectionStateResponse {
