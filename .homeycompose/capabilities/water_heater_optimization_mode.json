@@ -42,6 +42,13 @@
         "en": "Advanced",
         "no": "Avansert"
       }
+    },
+    {
+      "id": "Nettleie",
+      "title": {
+        "en": "Grid Fee",
+        "no": "Nettleie"
+      }
     }
   ],
   "icon": "/assets/icons/water-heater-optimization-mode.svg"
