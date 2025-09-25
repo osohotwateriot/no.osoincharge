@@ -31,5 +31,8 @@
   },
   "1.0.10": {
     "en": "Add energy consumption"
+  },
+  "1.0.11": {
+    "en": "Added the new Nettleie (Grid fee) optimization"
   }
 }
